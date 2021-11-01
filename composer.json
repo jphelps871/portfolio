@@ -1,0 +1,14 @@
+{
+	"name": "jamesphelps/portfolio",
+	"description": "portfolio",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Jamie Phelps",
+			"email": "james.phelps1995@live.com"
+		}
+	],
+	"require": {
+		"phpmailer/phpmailer": "^6.5"
+	}
+}

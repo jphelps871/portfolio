@@ -1,0 +1,510 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Main syles */
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: AliceBlue;
+  background-color: #323a47;
+  overflow: hidden;
+}
+
+header {
+  right: 0;
+  position: absolute;
+  z-index: 10000;
+  background-color: transparent;
+}
+
+h6 {
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: .05em;
+  color: #9B9C9E;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+}
+
+nav select {
+  border-radius: 5px;
+  padding: 6px 12px;
+}
+
+nav > * {
+  height: 44px;
+  margin-left: 32px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown {
+  height: 44px;
+}
+
+/* header styles */
+
+#mapid {
+  height: 100vh;
+  width: 100%;
+}
+
+.wrapper {
+  padding: 16px 24px 16px 24px;
+}
+
+#selectBorderCountries {
+  display: none;
+}
+
+#selectRandomCountry {
+  display: none;
+}
+
+/* Font awesome styles to icons */
+
+.fa-location-arrow {
+  color: #323a47;
+}
+
+.fa-location-arrow:active {
+  color: #323a47;
+}
+
+.fa-location-arrow:hover {
+  color: #0f1013;
+}
+
+.fa-location-arrow:focus {
+  color: #ffc107;
+}
+
+/* Main Content */
+
+/* Information panel at botttom / left of screen */
+.panel-container {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+
+  /* Calculate from bottom */
+  bottom: 0px;
+
+  position: absolute;
+  z-index: 1000;
+}
+
+.panel {
+  max-height: 60vh;
+  display: none;
+  overflow: auto;
+  box-shadow: 2px 2px 10px lightslategray;
+  background-color: #323a47;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Panel buttom buttons */
+
+.panel-buttons-container {
+  display: flex;
+  padding: 16px 24px 16px 24px;
+}
+
+.panel-buttons-container button {
+  box-shadow: 2px 2px 10px lightslategray;
+  width: 55px;
+  min-width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+
+.panel-buttons-container button:hover {
+  box-shadow: none;
+  color: #ffc107;
+}
+
+.show-panel {
+  background-color: #323a47;
+  color: white;
+}
+
+.remove-panel {
+  margin-left: auto;
+  transition: all .4s;
+  opacity: 0;
+  background: white;
+  color: #212529;
+}
+
+.panel-buttons-container .fas, 
+.panel-buttons-container .far {
+  pointer-events: none;
+}
+
+.panel-buttons-container button:not(:last-child) {
+  margin-right: 1em;
+}
+
+/* Panel information */
+.country-header {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.country-header h2 {
+  max-width: 400px;
+  margin: 0;
+}
+
+.economy-panel-info h2,
+.news-panel-info h2 {
+  margin-bottom: 24px;
+}
+
+.news-panel-info h3 {
+  margin: 24px 0;
+}
+
+.economy-sections-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.economy-sections-container > * {
+  flex: 1 185px;
+}
+
+.data-text h6 {
+  margin-bottom: 4px;
+}
+
+.data-text p {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.weather-container {
+  display: flex;
+  align-items: center;
+}
+
+.weather-container p:first-letter {
+  text-transform: uppercase;
+}
+
+.weather-container:not(:last-child) {
+  margin-bottom: 32px;
+}
+
+.weather-text {
+  width: 300px;
+}
+
+.weather-text h6 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.weather-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.weather-icon img {
+  width: 100%;
+}
+
+.weather .data-text p {
+  margin-bottom: 8px !important;
+}
+
+.country-flag-container {
+  height: 50px;
+}
+
+.country-flag-container img {
+  height: 100%;
+}
+
+.icon-container {
+  margin-right: 1em;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  background: #545860;
+  border-radius: 5px;
+  width: 45px;
+  height: 45px
+}
+
+.icon-container img {
+  width: 100%;
+}
+
+.data {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+/* Bootstrap classes */
+
+.dropdown-menu input:focus {
+  border: transparent;
+  background-color: transparent;
+  outline: none !important;
+}
+
+.dropdown-menu {
+  max-height: 300px !important;
+  min-width: 250px !important;
+  overflow-y: auto;
+}
+
+.btn-primary {
+  background-color: #323a47;
+  border-color: #323a47;
+}
+
+.btn-primary:hover {
+  background-color: #1c1f24;
+  border-color: #1c1f24;
+  color: #ffc107;
+}
+
+.btn-primary:active {
+  background-color: #1c1f24;
+  border-color: #1c1f24;
+}
+
+.btn-primary:focus {
+  background-color: #1c1f24;
+  border-color: #1c1f24;
+} 
+
+.card-body {
+  margin-bottom: 24px;
+}
+
+/* Popup styles for map */
+.popup {
+  transition: .4s all ease;
+  color: black !important;
+  z-index: 100000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.popup-content {
+  transition: .4s all ease-in-out;
+  color: white;
+  padding: 24px;
+  position: absolute;
+  border-radius: 8px !important;
+  width: 95%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  max-width: 700px;
+  left: 50%;
+}
+
+.preloader-intro {
+  background-color: #323a47;
+}
+
+.preloader {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.popup-content-intro {
+  background-color: #323a47;
+}
+
+.popup-content-loader {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.preloader {
+  display: none;
+}
+
+/* Earth loader */
+.loader {
+  margin: auto;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 16px;
+}
+
+.earth-container {
+  position: relative;
+}
+
+.earth {
+  width: 150px;
+  height: 150px;
+}
+
+.moon-container {
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  width: 150px;
+  height: 150px;
+}
+
+.moon {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+}
+
+@media (min-width: 725px) {
+  #selectBorderCountries {
+    display: block;
+  }
+  
+  #selectRandomCountry {
+    display: block;
+  }
+}
+
+@media (min-width: 524px) {
+
+  .panel-container {
+    margin: 0 24px;
+  }
+
+  .panel-buttons-container {
+    padding: 16px 0 16px 0;
+  }
+
+  .panel {
+    border-radius: 8px;
+  }
+
+  .bottom-spacing-lg {
+    bottom: 24px !important;
+  }
+}
+
+@media (max-width: 524px) {
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+}
+
+/* Javascript classes */
+
+.hidden {
+  display: none;
+}
+
+.show {
+  opacity: 1;
+}
+
+.panel-error {
+  background-color: darkred;
+  cursor: not-allowed !important;
+}
+
+.btn-popup {
+  background-color: white;
+  color: #212529;
+}
+
+/* remove 'x' from search input on chrome */
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* 
+
+  Map styles
+
+  - Overiding css styles
+
+*/
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: lightblue;
+}
+
+.leaflet-popup-content h6 {
+  font-size: 16px;
+}
+
+.leaflet-popup-content img {
+  max-height: 40vh;
+}
+
+.leaflet-popup-content p {
+  margin: 8px 0;
+}
+
+/* Controls */
+.leaflet-left,
+.leaflet-control,
+.leaflet-control-layers {
+  margin: 6px 11px;
+}
+
+.leaflet-control-layers,
+.leaflet-control-fullscreen {
+  color: white;
+  border: 0px solid transparent !important;
+  background-color: #323a47;
+}
+
+/* Layers icon */
+
+.leaflet-control-layers-toggle {
+  background-image: url('../../img/layers.svg') !important;
+}
+
+/* Expand icon */
+
+.leaflet-control-fullscreen {
+  width: 44px;
+  height: 44px;
+  background: transparent !important;
+}
+
+.leaflet-control-fullscreen a {
+  border-radius: 5px !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: #323a47 url('../../img/fullscreen.svg') no-repeat;
+  background-size: 60% auto;
+}
+
+.leaflet-control-fullscreen a:hover {
+  background-color: #1c1f24;
+}
+
+.leaflet-touch .leaflet-control-fullscreen a {
+  background-position: 50% 8px;
+}
+.leaflet-fullscreen-on .leaflet-control-fullscreen a {
+  background-position: 50% -28px;
+}
+.leaflet-touch.leaflet-fullscreen-on .leaflet-control-fullscreen a {
+  background-position: 50% -28px;
+}

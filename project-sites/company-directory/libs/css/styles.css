@@ -1,0 +1,554 @@
+/*
+***
+* MAIN STYLES
+***
+*/
+html {
+	min-height: 100%;
+	position: relative;
+}
+
+body {
+	height: 100%;
+	background-color: #4c406a !important;
+	color: #fff !important;
+}
+
+header {
+	background-color: #2d2641;
+	z-index: 10;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+header .active {
+	background-color: white !important;
+	color: #4c406a !important;
+}
+
+.display-main-data i {
+	pointer-events: none;
+}
+
+/*
+***
+* BOOTSTRAP OVERIDES
+***
+*/
+
+.badge-department {
+	background-color: #eb9566 !important;
+}
+
+.badge-personnel {
+	background-color: #939e2f !important;
+}
+
+.badge-location {
+	background-color: #379e9a !important;
+}
+
+.badge {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: normal !important;
+	padding: 1em !important;
+	color: white !important;
+	max-width: 150px;
+}
+
+.nav-link {
+	color: white !important;
+}
+
+nav .active {
+	color: #4c406a !important;
+	background-color: #fff !important;
+	border-color: #fff !important;
+}
+
+input[type='search']::-webkit-search-cancel-button {
+	-webkit-appearance: searchfield-cancel-button;
+}
+
+.shadow-lg {
+	box-shadow: 0 4px 2px -2px black !important;
+}
+
+/* List groups */
+.list-group button:hover {
+	color: #4c406a !important;
+	background-color: whitesmoke !important;
+}
+
+.list-group button:disabled {
+	color: rgb(192, 192, 192) !important;
+}
+
+/* Shadows */
+.shadow-lg {
+	box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Colors */
+.bg-primary,
+.btn-primary {
+	background-color: #eaa681 !important;
+	border-color: #eaa681 !important;
+	color: white;
+}
+
+.btn-primary:hover {
+	background-color: #b87f61 !important;
+	border-color: #b87f61 !important;
+}
+
+/* Container */
+.container-fluid {
+	max-width: 2000px;
+}
+
+/* Buttons */
+.btn-link {
+	color: whitesmoke !important;
+	text-decoration: none !important;
+}
+
+.btn-link:hover {
+	color: #4c406a !important;
+	background-color: whitesmoke;
+}
+
+.danger:hover {
+	background-color: #dc3545 !important;
+	border-color: #dc3545 !important;
+	color: whitesmoke !important;
+}
+
+/* Form validation */
+.is-invalid {
+	color: red;
+	font-size: 14px;
+}
+
+#searchPersonnelFormContainer {
+	width: 100%;
+}
+
+#searchedDataContainer {
+	padding-right: 41px !important;
+	margin-top: 1.8rem;
+	max-height: 400px;
+	overflow-y: scroll;
+}
+
+#searchedDataContainer .list-group-item:hover {
+	background-color: whitesmoke !important;
+	color: #4c406a !important;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Prevent focus on search input */
+#searchPersonnel:focus {
+	border-color: transparent !important;
+	border-left: 1px solid #5a4d7f !important;
+	border-top: 1px solid #5a4d7f !important;
+	border-right: 1px solid whitesmoke !important;
+	border-bottom: 1px solid #5a4d7f !important;
+	box-shadow: none !important;
+}
+
+/* Change form control for search input */
+#searchPersonnelForm .form-control {
+	border-left: 1px solid #5a4d7f;
+	border-top: 1px solid #5a4d7f;
+	border-right: 1px solid whitesmoke;
+	border-bottom: 1px solid #5a4d7f;
+	color: whitesmoke;
+}
+
+/* Redcuce spinner size */
+.spinner-border {
+	width: 20px !important;
+	height: 20px !important;
+	margin-left: 8px !important;
+	color: white !important;
+}
+
+/*
+***
+* FONT AWESOME OVERSIDES
+***
+*/
+
+#searchPersonnelForm .fas {
+	line-height: 1.5;
+	color: whitesmoke;
+}
+
+.fa-caret-up,
+.fa-caret-down {
+	color: tomato;
+}
+
+/*
+***
+* BROWSER OVERIDES
+***
+*/
+
+::placeholder {
+	color: white !important;
+	opacity: 0.5 !important;
+}
+
+/*
+***
+* CUSTOM STYLES
+***
+*/
+
+/* 
+* multiple 
+*/
+.bg-yellow {
+	background-color: #eb9566 !important;
+}
+
+.no-pointer-events {
+	pointer-events: none;
+}
+
+.bg-purple {
+	background-color: #5a4d7f !important;
+}
+
+.clickable {
+	cursor: pointer !important;
+}
+
+/* 
+* JavaScript 
+*/
+
+.stop-scroll {
+	overflow: hidden;
+}
+
+.userSearching {
+	z-index: 5;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.button-loading {
+	cursor: not-allowed;
+}
+
+/* 
+* preloader animation 
+*/
+
+#preloader {
+	z-index: 10000;
+	background-color: #342363;
+	height: 100vh;
+}
+
+/* preloader animation from https://loading.io/css/ */
+
+.lds-roller {
+	display: inline-block;
+	position: relative;
+	width: 80px;
+	height: 80px;
+}
+
+.lds-roller div {
+	animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	transform-origin: 40px 40px;
+}
+
+.lds-roller div:after {
+	content: ' ';
+	display: block;
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #fff;
+	margin: -4px 0 0 -4px;
+}
+
+.lds-roller div:nth-child(1) {
+	animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+	top: 63px;
+	left: 63px;
+}
+.lds-roller div:nth-child(2) {
+	animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+	top: 68px;
+	left: 56px;
+}
+.lds-roller div:nth-child(3) {
+	animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+	top: 71px;
+	left: 48px;
+}
+.lds-roller div:nth-child(4) {
+	animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+	top: 72px;
+	left: 40px;
+}
+.lds-roller div:nth-child(5) {
+	animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+	top: 71px;
+	left: 32px;
+}
+.lds-roller div:nth-child(6) {
+	animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+	top: 68px;
+	left: 24px;
+}
+.lds-roller div:nth-child(7) {
+	animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+	top: 63px;
+	left: 17px;
+}
+.lds-roller div:nth-child(8) {
+	animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+	top: 56px;
+	left: 12px;
+}
+@keyframes lds-roller {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* 
+* lock animation 
+*/
+
+/* Lock animation taken from https://codepen.io/beccakroese/pen/GQgwbx */
+
+.lock-container {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+
+.lock {
+	width: 24px;
+	height: 21px;
+	border: 2px solid #eaa681;
+	border-radius: 5px;
+	position: relative;
+	cursor: pointer;
+	-webkit-transition: all 0.1s ease-in-out;
+	transition: all 0.1s ease-in-out;
+}
+
+.lock:after {
+	content: '';
+	display: block;
+	background: #eaa681;
+	width: 3px;
+	height: 7px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -3.5px 0 0 -2px;
+	-webkit-transition: all 0.1s ease-in-out;
+	transition: all 0.1s ease-in-out;
+}
+
+.lock:before {
+	content: '';
+	display: block;
+	width: 16px;
+	height: 14px;
+	bottom: 100%;
+	position: absolute;
+	left: 50%;
+	margin-left: -8px;
+	border: 2px solid #eaa681;
+	border-top-right-radius: 50%;
+	border-top-left-radius: 50%;
+	border-bottom: 0;
+	-webkit-transition: all 0.1s ease-in-out;
+	transition: all 0.1s ease-in-out;
+}
+
+/* Unlocked */
+.unlocked {
+	transform: rotate(10deg);
+}
+
+.unlocked:before {
+	bottom: 130%;
+	left: 31%;
+	margin-left: -11.5px;
+	transform: rotate(-45deg);
+}
+
+.unlocked,
+.unlocked:before {
+	border-color: #ff5153;
+}
+
+.unlocked:after {
+	background: #ff5153;
+}
+
+/* 
+* Search input 
+*/
+
+/* Search input */
+#searchPersonnelForm:focus-within {
+	color: #212529;
+	border-color: #86b7fe;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+	border-radius: 0.25rem;
+}
+
+#buttonSearch {
+	transition: all 0.2s ease;
+	border-radius: 0 0.25rem 0.25rem 0;
+	border-color: #5a4d7f;
+	background-color: #5a4d7f;
+	min-height: 38px;
+}
+
+#buttonSearch:hover {
+	background-color: whitesmoke;
+	border-color: whitesmoke;
+}
+
+#buttonSearch:hover .fas {
+	color: #5a4d7f !important;
+}
+
+/*
+* Header 
+*/
+#pills-tab {
+	margin-bottom: 0.8em;
+}
+
+#refreshAndTabContainer {
+	width: 100%;
+	justify-content: space-between;
+}
+
+/* 
+* Main content
+*/
+
+#mainContent {
+	padding-top: 145px;
+}
+
+/* 
+* Form
+*/
+
+input[type='text']:read-only,
+input[type='email']:read-only,
+select:disabled {
+	background-color: lightgray !important;
+	border-color: lightgray !important;
+	color: grey !important;
+	pointer-events: none !important;
+}
+
+/* Form errors */
+
+.error {
+	font-size: 14px;
+	color: red;
+}
+
+/* 
+* Cards 
+*/
+
+/* Personnel container */
+.display-main-data {
+	height: fit-content;
+	height: -moz-fit-content;
+}
+
+/* All personell cards */
+.display-main-data > * {
+	flex: 1 1 700px;
+}
+
+/* name and department container */
+.card-body-main {
+	width: 60%;
+}
+
+.card:focus {
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem whitesmoke;
+}
+
+/* Edit and delete */
+.edit-card-btn,
+.delete-card-btn {
+	display: inline;
+	min-width: 60px;
+}
+
+.edit-card-btn i,
+.delete-card-btn i {
+	width: 20px;
+}
+
+/*
+***
+* Media queries
+***
+*/
+
+@media (min-width: 999px) {
+	#searchPersonnelFormContainer {
+		width: 60%;
+		max-width: 1250px;
+	}
+	#mainContent {
+		padding-top: 80px;
+	}
+	#pills-tab,
+	#refreshPageBtn {
+		margin-bottom: 0 !important;
+	}
+
+	#refreshAndTabContainer {
+		width: auto;
+		justify-content: stretch;
+	}
+}

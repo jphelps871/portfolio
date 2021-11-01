@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Company directory example" />
+		<meta name="author" content="James Phelps" />
+		<title>Company Directory</title>
+
+		<!-- Custom styles -->
+		<link rel="stylesheet" href="./libs/css/styles.css" />
+
+		<!-- Bootstrap and jquery -->
+		<link rel="stylesheet" href="./vendors/bootstrap/css/bootstrap.min.css" />
+		<script src="./vendors/jquery/jquery-3.6.0.min.js"></script>
+		<script src="./vendors/bootstrap/js/bootstrap.min.js"></script>
+
+		<!-- Jquery validation -->
+		<script src="./vendors/jquery/jquery-validation.js"></script>
+
+		<!-- Font awesome -->
+		<script src="./vendors/font_awesome/font_awesome.js"></script>
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href="./favicon.ico" />
+	</head>
+	<body>
+		<!-- NOTIFICATIONS -->
+		<!-- Server-side notification -->
+		<div
+			id="toastContainerServer"
+			class="toast-container position-fixed top-0 start-0 p-3"
+			style="z-index: 20; color: black"
+		>
+			<div
+				id="addedPersonnelNotification"
+				class="toast align-items-center text-white bg-primary border-0"
+				role="alert"
+				aria-live="assertive"
+				aria-atomic="true"
+			>
+				<div class="d-flex">
+					<div class="toast-body"></div>
+					<button
+						type="button"
+						class="btn-close btn-close-white me-2 m-auto"
+						data-bs-dismiss="toast"
+						aria-label="Close"
+					></button>
+				</div>
+			</div>
+		</div>
+		<!-- Error notification -->
+		<div
+			id="toastContainerError"
+			class="toast-container position-fixed top-0 start-0 p-3"
+			style="z-index: 20; color: black"
+		>
+			<div
+				id="unkownErrorNotification"
+				class="toast align-items-center text-white bg-danger border-0"
+				role="alert"
+				aria-live="assertive"
+				aria-atomic="true"
+			>
+				<div class="d-flex">
+					<div class="toast-body"></div>
+					<button
+						type="button"
+						class="btn-close btn-close-white me-2 m-auto"
+						data-bs-dismiss="toast"
+						aria-label="Close"
+					></button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Prevent scroll on seaerch focus -->
+		<div
+			id="SearchBackground"
+			class="position-absolute top-0 right-0 bottom-0 left-0 w-100 d-none"
+		></div>
+
+		<!-- Preloader -->
+		<div
+			id="preloader"
+			class="position-absolute d-flex align-items-center justify-content-center w-100"
+		>
+			<div class="lds-roller">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+
+		<!-- MODALS -->
+		<!-- Add personnel -->
+		<div class="modal fade" id="modalAddPersonnel" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Adding Personnel</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<!-- Add personnel form -->
+						<form id="addPersonnel" autocomplete="off" class="add-employee-form">
+							<div class="mb-2">
+								<label for="firstName" class="form-label">First Name <span>*</span></label>
+								<input type="text" class="form-control" name="firstName" required />
+							</div>
+							<div class="mb-2">
+								<label for="lastName" class="form-label">Surname <span>*</span></label>
+								<input type="text" class="form-control" name="lastName" required />
+							</div>
+							<div class="mb-2">
+								<label for="email" class="form-label">Email <span>*</span></label>
+								<input
+									id="emailInputForNewPersonnel"
+									type="email"
+									class="form-control"
+									name="email"
+									required
+								/>
+							</div>
+							<div class="mb-2">
+								<label class="form-label">Department <span>*</span></label>
+								<select
+									name="departmentID"
+									class="form-select department-select-data empty-data"
+									aria-label="departments"
+									required
+								>
+									<option selected value="">Select department</option>
+								</select>
+							</div>
+							<div class="mb-2">
+								<label for="jobTitle" class="form-label">Job title</label>
+								<input type="text" class="form-control" name="jobTitle" />
+							</div>
+							<button type="submit" class="mt-2 btn btn-primary w-100">
+								<div class="d-none spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								Add Personnel
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Add department -->
+		<div class="modal fade" id="modalAddDepartment" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Adding Department</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<!-- Add departmet form -->
+						<form id="addDepartment" autocomplete="off" class="add-employee-form">
+							<div class="mb-2">
+								<label for="name" class="form-label">Department Name <span>*</span></label>
+								<input name="name" type="text" class="form-control" required />
+							</div>
+							<div class="mb-2">
+								<label class="form-label">Location <span>*</span></label>
+								<select
+									name="locationID"
+									class="form-select location-select-data empty-data"
+									aria-label="locations"
+									required
+								>
+									<option selected value="">Select Location</option>
+								</select>
+							</div>
+							<button type="submit" class="mt-2 btn btn-primary w-100">
+								<div class="d-none spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								Add Department
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Add location -->
+		<div class="modal fade" id="modalAddLocation" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Adding Location</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<!-- Add location form -->
+						<form id="addLocation" autocomplete="off" class="add-employee-form">
+							<div class="mb-2">
+								<label for="name" class="form-label">Location Name <span>*</span></label>
+								<input name="name" type="text" class="form-control" required />
+							</div>
+							<button type="submit" class="mt-2 btn btn-primary w-100">
+								<div class="d-none spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								Add Location
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Edit personnel -->
+		<div class="modal fade" id="modalEditPersonnel" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Personnel Infomation</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<div class="d-flex justify-content-between">
+							<p>Click the lock to make changes.</p>
+							<div class="lock-container">
+								<span class="lock"></span>
+							</div>
+						</div>
+						<!-- Edit personnel form -->
+						<form id="editPersonnel" autocomplete="off" class="add-employee-form edit-form">
+							<div class="mb-2">
+								<label for="firstName" class="form-label">First Name <span>*</span></label>
+								<input type="text" class="form-control" name="firstName" required readonly />
+							</div>
+							<div class="mb-2">
+								<label for="lastName" class="form-label">Surname <span>*</span></label>
+								<input type="text" class="form-control" name="lastName" required readonly />
+							</div>
+							<div class="mb-2">
+								<label for="email" class="form-label">Email <span>*</span></label>
+								<input type="email" class="form-control" name="email" required readonly />
+							</div>
+							<div class="mb-2">
+								<label class="form-label">Department <span>*</span></label>
+								<select
+									name="departmentID"
+									class="form-select department-select-data empty-data"
+									aria-label="departments"
+									required
+									disabled
+								>
+									<option selected value="">Select department</option>
+								</select>
+							</div>
+							<div class="mb-2">
+								<label for="jobTitle" class="form-label">Job title</label>
+								<input type="text" class="form-control" name="jobTitle" readonly />
+							</div>
+							<input type="hidden" name="personnelID" />
+							<button type="submit" class="mt-2 btn btn-primary w-100" disabled>
+								<div class="d-none spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								Save personnel
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Edit department -->
+		<div class="modal fade" id="modalEditDepartment" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Department Infomation</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<div class="d-flex justify-content-between">
+							<p>Click the lock to make changes.</p>
+							<div class="lock-container">
+								<span class="lock"></span>
+							</div>
+						</div>
+						<!-- Edit department form -->
+						<form
+							id="editDepartment"
+							method="POST"
+							autocomplete="off"
+							class="add-employee-form bg-purple edit-form"
+						>
+							<div class="mb-2">
+								<label for="name" class="form-label">Department <span>*</span></label>
+								<input
+									id="departmentName"
+									name="name"
+									type="text"
+									class="form-control"
+									required
+									readonly
+								/>
+							</div>
+							<div class="mb-2">
+								<label for="locationID" class="form-label">Location <span>*</span></label>
+								<select
+									name="locationID"
+									class="form-select location-select-data empty-data"
+									aria-label="locations"
+									required
+									disabled
+								>
+									<option selected value="">Select Location</option>
+								</select>
+							</div>
+							<!-- Hidden data for PHP -->
+							<input type="hidden" name="departmentID" />
+							<button type="submit" name="editButton" class="mt-2 btn btn-primary w-100" disabled>
+								<div class="d-none spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								Save Changes
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Edit location -->
+		<div class="modal fade" id="modalEditLocation" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Edit Location</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<div class="d-flex justify-content-between">
+							<p>Click the lock to make changes.</p>
+							<div class="lock-container">
+								<span class="lock"></span>
+							</div>
+						</div>
+						<!-- Edit location form -->
+						<form id="editLocation" autocomplete="off" class="add-employee-form edit-form">
+							<div class="mb-2">
+								<label for="name" class="form-label">Location Name <span>*</span></label>
+								<input name="name" type="text" class="form-control" required readonly />
+							</div>
+							<input type="hidden" name="locationID" />
+							<button type="submit" class="mt-2 btn btn-primary w-100" disabled>
+								<div class="d-none spinner-border" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
+								Update Location
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Delete personnel -->
+		<div class="modal fade" id="modalDeletePersonnel" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Deleting personnel</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<!-- Add personnel form -->
+						<form id="deletePersonnel" class="add-employee-form bg-purple">
+							<p>Are you sure you want to delete <span class="fw-bolder"></span>?</p>
+							<input type="hidden" name="id" />
+							<div class="d-flex justify-content-between w-100">
+								<button
+									type="button"
+									class="mt-2 btn btn-primary w-50 me-3"
+									data-bs-dismiss="modal"
+								>
+									No
+								</button>
+								<button type="submit" class="mt-2 btn btn-danger w-50 ms-3">
+									Yes Delete
+									<div class="d-none spinner-border" role="status">
+										<span class="sr-only">Loading...</span>
+									</div>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Delete department -->
+		<div class="modal fade" id="modalDeleteDepartment" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Deleting department</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<!-- Delete department form -->
+						<form id="deleteDepartment" class="add-employee-form form-has-dependecies bg-purple">
+							<p class="check-with-user">
+								Are you sure you want to delete <span class="fw-bolder"></span>?
+							</p>
+							<p class="has-dependencies-text text-warning d-none">
+								This department has dependencies, You cannot delete as personnel are using this
+								department
+							</p>
+							<input type="hidden" name="id" />
+							<div class="d-flex justify-content-between w-100">
+								<button
+									type="button"
+									class="mt-2 btn btn-primary w-50 me-3"
+									data-bs-dismiss="modal"
+								>
+									No
+								</button>
+								<button type="submit" class="mt-2 btn btn-danger w-50 ms-3">
+									Yes Delete
+									<div class="d-none spinner-border" role="status">
+										<span class="sr-only">Loading...</span>
+									</div>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Delete location -->
+		<div class="modal fade" id="modalDeleteLocation" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-purple">
+						<h5 class="modal-title">Deleting location</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body bg-purple">
+						<!-- Add personnel form -->
+						<form id="deleteLocation" class="add-employee-form bg-purple form-has-dependecies">
+							<p class="check-with-user">
+								Are you sure you want to delete <span class="fw-bolder"></span>?
+							</p>
+							<p class="has-dependencies-text text-warning d-none">
+								This department has dependencies, You cannot delete as personnel are using this
+								department
+							</p>
+							<input type="hidden" name="id" />
+							<div class="d-flex justify-content-between w-100">
+								<button
+									type="button"
+									class="mt-2 btn btn-primary w-50 me-3"
+									data-bs-dismiss="modal"
+								>
+									No
+								</button>
+								<button type="submit" class="mt-2 btn btn-danger w-50 ms-3">
+									Yes Delete
+									<div class="d-none spinner-border" role="status">
+										<span class="sr-only">Loading...</span>
+									</div>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- DISPLAYED CONTENT -->
+		<!-- Header -->
+		<header
+			class="p-3 w-100 d-flex flex-wrap align-items-center justify-content-between position-fixed"
+		>
+			<!-- Tabs and refresh -->
+			<div id="refreshAndTabContainer" class="d-flex align-items-center">
+				<!-- Refresh system -->
+				<button id="refreshPageBtn" class="btn btn-link danger me-2 mb-2">
+					<i class="fas fa-sync-alt"></i>
+				</button>
+				<!-- Tab between data -->
+				<ul class="nav nav-pills" id="pills-tab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button
+							class="btn btn-link me-2 active"
+							id="pills-personnel-tab"
+							data-bs-toggle="pill"
+							data-bs-target="#pills-personnel"
+							type="button"
+							role="tab"
+							aria-controls="pills-personnel"
+							aria-selected="true"
+						>
+							Personnel
+						</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button
+							class="btn btn-link me-2"
+							id="pills-department-tab"
+							data-bs-toggle="pill"
+							data-bs-target="#pills-department"
+							type="button"
+							role="tab"
+							aria-controls="pills-department"
+							aria-selected="false"
+						>
+							Department
+						</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button
+							class="btn btn-link"
+							id="pills-location-tab"
+							data-bs-toggle="pill"
+							data-bs-target="#pills-location"
+							type="button"
+							role="tab"
+							aria-controls="pills-location"
+							aria-selected="false"
+						>
+							Location
+						</button>
+					</li>
+				</ul>
+			</div>
+
+			<div id="searchPersonnelFormContainer" class="position-relative">
+				<!-- Search input -->
+				<form class="input-group" id="searchPersonnelForm" autocomplete="off">
+					<input
+						id="searchPersonnel"
+						type="search"
+						name="search"
+						class="form-control bg-purple"
+						placeholder="Search"
+						aria-label="Search employees"
+						aria-describedby="buttonSearch"
+					/>
+					<div class="input-group-append">
+						<button type="submit" class="input-group-text" id="buttonSearch" title="Search">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+				</form>
+
+				<!-- Display search results -->
+				<div class="w-100 position-absolute d-none" id="searchedDataContainer">
+					<p class="text-warning d-none">No search results</p>
+					<div class="list-group">
+						<!-- Data from server -->
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Main -->
+		<div id="mainContent" class="container-fluid">
+			<main class="tab-content">
+				<!-- Personnel -->
+				<div
+					id="pills-personnel"
+					class="tab-pane fade show active"
+					role="tabpanel"
+					aria-labelledby="pills-personnel-tab"
+				>
+					<div class="personnel-header-container d-flex justify-content-between mb-3">
+						<div class="d-flex justify-content-between w-100">
+							<h3>Personnel</h3>
+							<button
+								id="newEmployeeBtn"
+								class="btn btn-link"
+								data-bs-toggle="modal"
+								data-bs-target="#modalAddPersonnel"
+							>
+								<i class="fa fa-plus"></i> personnel
+							</button>
+						</div>
+					</div>
+					<!-- All personnel -->
+					<section
+						id="companyPersonnelContainer"
+						class="d-flex flex-wrap gap-2 display-main-data empty-data mb-3"
+					>
+						<!-- Data input from JavaScript -->
+					</section>
+				</div>
+
+				<!-- Departments -->
+				<div
+					id="pills-department"
+					class="tab-pane fade"
+					role="tabpanel"
+					aria-labelledby="pills-department-tab"
+				>
+					<div class="departments-header-containers d-flex justify-content-between mb-3">
+						<div class="d-flex justify-content-between w-100">
+							<h3>Departments</h3>
+							<button
+								id="newDepartmentBtn"
+								class="btn btn-link"
+								data-bs-toggle="modal"
+								data-bs-target="#modalAddDepartment"
+							>
+								<i class="fa fa-plus"></i> department
+							</button>
+						</div>
+					</div>
+					<section
+						id="companyDepartmentsContainer"
+						class="mb-3 d-flex flex-wrap gap-2 display-main-data empty-data"
+					>
+						<!-- Data input from JavaScript -->
+					</section>
+				</div>
+
+				<!-- Location -->
+				<div
+					id="pills-location"
+					class="tab-pane fade"
+					role="tabpanel"
+					aria-labelledby="pills-location-tab"
+				>
+					<div class="d-flex justify-content-between mb-3">
+						<div class="d-flex justify-content-between w-100">
+							<h3>Locations</h3>
+							<button
+								id="newLocationBtn"
+								class="btn btn-link"
+								data-bs-toggle="modal"
+								data-bs-target="#modalAddLocation"
+							>
+								<i class="fa fa-plus"></i> location
+							</button>
+						</div>
+					</div>
+					<section
+						id="companyLocationsContainer"
+						class="mb-3 d-flex flex-wrap gap-2 display-main-data empty-data"
+					>
+						<!-- Data input from JavaScript -->
+					</section>
+				</div>
+			</main>
+		</div>
+		<script src="./libs/javascript/script.js"></script>
+	</body>
+</html>
