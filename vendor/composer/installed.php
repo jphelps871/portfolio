@@ -2,18 +2,18 @@
     'root' => array(
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
-        'type' => 'project',
+        'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'reference' => NULL,
-        'name' => 'jamesphelps/portfolio',
+        'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
-        'jamesphelps/portfolio' => array(
+        '__root__' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
-            'type' => 'project',
+            'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'reference' => NULL,
